@@ -1,12 +1,12 @@
 package com.erickcastro.workshopmongo.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.erickcastro.workshopmongo.domain.User;
 import com.erickcastro.workshopmongo.repository.UserRepository;
+import com.erickcastro.workshopmongo.services.exception.ObjectNoFoundException;
 
 @Service
 public class UserService {
@@ -15,8 +15,12 @@ public class UserService {
 	private UserRepository repo;
 	
 	public List<User> findAll(){
-		return repo.findAll();
-		
+		return repo.findAll();	
+	}
+	
+	public User findById(String id) {
+	    return repo.findById(id)
+	    .orElseThrow(() -> new ObjectNoFoundException("Objeto não encontrado para o ID: " + id));
 	}
 	
 }
